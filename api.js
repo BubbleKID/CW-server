@@ -18,51 +18,61 @@ useUnifiedTopology: true }, function(error) {
     }
 });
 
-router.get('/save', function(req, res) {
-    var newStudent = new ProductModel({Name: "Sam", Price: 1.22, Type: "Books", Active: true});
+router.post('/save', function(req, res) {
+  const newProduct = new ProductModel();
+  newProduct.name = req.body.name;
+  newProduct.price = req.body.price;
+  newProduct.type = req.body.type;
+  newProduct.active = req.body.active;
 
-    newStudent.save(function(err, data) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            res.send("Data inserted");
-        }
-    });
+  newProduct.save(function(err, data){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("Data inserted");
+      res.send("Data inserted");
+    }
+  });
 });
 
 router.get('/findall', function(req, res) {
   ProductModel.find(function(err, data) {
     if(err){
-        console.log(err);
+      console.log(err);
     }
     else{
-        res.send(data);
+      res.send(data);
     }
   });  
 });
 
 router.post('/delete', function(req, res) {
-    StudentModel.findByIdAndDelete((req.body.id), 
-    function(err, data) {
-        if(err){
-            console.log(err);
-        }
-        else{
-            res.send(data);
-            console.log("Data Deleted!");
-        }
-    });  
+  ProductModel.findByIdAndDelete((req.body._id),
+  function(err, data) {
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.send("Data Deleted!");
+      console.log(data);
+    }
+  });  
 });
 
 router.post('/update', function(req, res) {
-    StudentModel.findByIdAndUpdate(req.body.id, 
-    {Name:req.body.Name}, function(err, data) {
+    ProductModel.findByIdAndUpdate(req.body._id, 
+    {
+      name: req.body.name,
+      price: req.body.price,
+      type: req.body.type,
+      active: req.body.active,
+    }, function(err, data) {
         if(err){
             console.log(err);
         }
         else{
-            res.send(data);
+            res.send('Data updated!');
             console.log("Data updated!");
         }
     });  

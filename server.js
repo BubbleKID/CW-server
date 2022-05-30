@@ -19,3 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); 
   
 app.use('/api', api);
+
+app.get('/', function(req, res){
+  res.send('You shall not pass!');
+});

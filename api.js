@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const express = require('express'); 
 const router = express.Router();
 const ProductModel = require('./productschema');
+require('dotenv').config({path: './.env'});
 
 // Connecting to database
-const username = encodeURIComponent("marksama");
-const password = encodeURIComponent("eLZ2EOSUG4yBfGhh");
+const username = encodeURIComponent(process.env.USER_NAME);
+const password = encodeURIComponent(process.env.PASSWORD);
 const query = `mongodb+srv://${username}:${password}@cluster0.qpmztq7.mongodb.net/?retryWrites=true&w=majority`;
   
 const db = (query);
